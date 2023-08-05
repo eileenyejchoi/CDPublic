@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We' crossorigin='anonymous'>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="d-flex justify-content-end flex-row align-items-center p-3">
+            <div class="m-3"><a href="/bands/my_bands/{{band.id}}">My Bands</a></div>
+            <!-- My Bands link unavailable -->
+            <div class="m-3"><a href="/bands/new">New Bands</a></div>
+            <div class="m-3"><a href="/bands/logout" class="btn btn-danger">Log Out</a></div>
+    </div>
+    <h1 class="text-center mb-4">Rock on {{user.first_name}}!</h1>
+    <!-- Unable to get session user first_name to show up -->
+    <div>
+        <h2 class="text-center "><u>All Bands</u></h2>
+        <table class="table table-striped text-center mx-auto border border-dark" style="width:1000px;">
+            <thead>
+                <tr>
+                    <th scope="col">Band Name</th>
+                    <th scope="col">Founding Member</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in band %}
+                <tr>
+                    <td>{{b.band_name}}</td>
+                    <td></td>
+                    <td>{{b.genre}}</td>
+                    <td>
+                        {% if session['user_id'] == b.creator.id %}
+                            <a href="/bands/edit/{{b.id}}">Edit</a> |
+                            <a href="/bands/delete/{{b.id}}">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
